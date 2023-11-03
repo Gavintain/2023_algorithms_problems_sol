@@ -169,20 +169,20 @@ def solution(n, s, a, b, fares):
 
 
 ## 힙큐를 제대로 이용하니 시간 효율성 최대 5배 향상
-import heapq
+
 import math
-
+import heapq
 def solution(n, s, a, b, fares):
-    graph = [[] for _ in range(n + 1)]
+    graph = [[] for _ in range(n)]
     for fare in fares:
-        graph[fare[0]].append((fare[1], fare[2]))
-        graph[fare[1]].append((fare[0], fare[2]))
-
-    def dijkstra(start):
-        distances = [math.inf] * (n + 1)
-        distances[start] = 0
-        queue = []
-        heapq.heappush(queue,(0,start))
+        graph[fare[0]-1].append((fare[1]-1, fare[2]))
+        graph[fare[1]-1].append((fare[0]-1, fare[2]))
+  
+    def dijkstra(start_node_number):
+        distances = [math.inf] * (n) ###  = math.inf 가 n개 있는 리스트
+        distances[start_node_number] = 0
+        queue = [] ## 다음에 추가로 최단 거리를 계산할 노드들
+        heapq.heappush(queue,(0,start_node_number))
   
         while queue:
             distance,current_node = heapq.heappop(queue)
@@ -196,10 +196,11 @@ def solution(n, s, a, b, fares):
                         heapq.heappush(queue,(distance,adjacent))
         return distances
 
+
     min_cost = math.inf
-    for i in range(1, n + 1):
+    for i in range(n):
         temp_dist = dijkstra(i)
-        cost = temp_dist[s] + temp_dist[a] + temp_dist[b]
+        cost = temp_dist[s-1] + temp_dist[a-1] + temp_dist[b-1]
         min_cost = min(min_cost, cost)
 
     return min_cost
