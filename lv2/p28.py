@@ -30,6 +30,6 @@ def solution(arr1, arr2):
         answer.append(tmp)
     return answer
 
-## 다른 사람 풀이 . zip 함수를 잘 활용하였다...
+## 다른 사람 풀이 . zip 함수를 잘 활용하였다... *B 이것이 핵심.
 def solution(A, B):
     return [[sum(a*b for a, b in zip(A_row,B_col)) for B_col in zip(*B)] for A_row in A]
